@@ -11,8 +11,8 @@ export default function TableBody({ cars }) {
                 <td>{car.car_color}</td>
                 <td>{car.car_model_year}</td>
                 <td>{car.price}</td>
-                <td>{car.availability}</td>
-                <td>{car.car}</td>
+                <td>{car.availability ? 'yes' : 'nou'}</td>
+                <td>Edit, Delete</td>
             </tr>))}
         </tbody>
     )
