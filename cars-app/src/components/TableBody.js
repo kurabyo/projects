@@ -1,8 +1,10 @@
 import React from 'react'
+import ActionMenu from './ActionMenu'
+import '../styles/table.css'
 
 export default function TableBody({ cars }) {
     return (
-        <tbody>
+        <tbody className='align-items-center'>
             {cars?.map((car) => (
             <tr >
                 <td>{car.car}</td>
@@ -12,7 +14,7 @@ export default function TableBody({ cars }) {
                 <td>{car.car_model_year}</td>
                 <td>{car.price}</td>
                 <td>{car.availability ? 'yes' : 'nou'}</td>
-                <td>Edit, Delete</td>
+                <td><ActionMenu /></td>
             </tr>))}
         </tbody>
     )

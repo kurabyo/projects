@@ -38,39 +38,25 @@ function App() {
 
   return (
     <div className="App">
-      <table class="table">
+      <table className="table">
         <TableHead />
         <TableBody cars={currentCars} />
       </table>
-      <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: 20,
-        boxSizing: 'border-box',
-        width: '100%',
-        height: '100%',
-      }}
-    >
       <ReactPaginate
-      activeClassName={'item active '}
-      breakClassName={'item break-me '}
-      containerClassName={'pagination'}
-      disabledClassName={'disabled-page'}
-      marginPagesDisplayed={2}
-      nextClassName={"item next "}
-      pageClassName={'item pagination-page '}
-      previousClassName={"item previous"}
           breakLabel="..."
           nextLabel=">"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={2}
           pageCount={pageCount}
           previousLabel="<"
-          renderOnZeroPageCount={null} />
+          renderOnZeroPageCount={null} 
+          containerClassName='pagination'
+          pageLinkClassName='page-num'
+          previousLinkClassName='page-num'
+          nextLinkClassName='page-num'
+          activeLinkClassName='active'
+          breakLinkClassName='break'/>
           </div>
-    </div>
   );
 }
 
