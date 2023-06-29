@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function TableHead() {
     return (
-        <thead class="thead-dark">
+        <thead className="thead-dark">
             <tr>
                 <th scope="col">Company</th>
                 <th scope="col">Model</th>

@@ -6,7 +6,7 @@ export default function TableBody({ cars }) {
     return (
         <tbody className='align-items-center'>
             {cars?.map((car) => (
-            <tr >
+            <tr key={car.id}>
                 <td>{car.car}</td>
                 <td>{car.car_model}</td>
                 <td>{car.car_vin}</td>
@@ -14,7 +14,7 @@ export default function TableBody({ cars }) {
                 <td>{car.car_model_year}</td>
                 <td>{car.price}</td>
                 <td>{car.availability ? 'yes' : 'nou'}</td>
-                <td><ActionMenu /></td>
+                <td><ActionMenu id={car.id} car={car}/></td>
             </tr>))}
         </tbody>
     )
