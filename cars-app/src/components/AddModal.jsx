@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
@@ -21,14 +21,17 @@ const style = {
     p: 4,
 };
 
-export default function EditModal({ car }) {
-
+const AddModal = () => {
     const { cars, setCars } = useContext(CarsContext);
 
     const [open, setOpen] = useState(false);
-    const [color, setColor] = useState(car.car_color);
-    const [price, setPrice] = useState(car.price);
-    const [availability, setAvailability] = useState(car.availability);
+    const [company, setCompany] = useState('');
+    const [model, setModel] = useState('');
+    const [vin, setVin] = useState('');
+    const [color, setColor] = useState('');
+    const [year, setYear] = useState('');
+    const [price, setPrice] = useState('');
+    const [availability, setAvailability] = useState(false);
 
 
     const handleOpen = () => setOpen(true);
@@ -47,20 +50,47 @@ export default function EditModal({ car }) {
         setAvailability(e.target.checked)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        editCar()
+    const companyChangeHandle = (e) => {
+        setCompany(e.target.value)
     }
 
-    const editCar = () => {
-        const carWithIdIndex = cars.findIndex((i) => i.id === car.id);
-        setCars(prev => prev.toSpliced(carWithIdIndex, 1, {...car, car_color: color, price: price, availability: availability}))
+    const modelChangeHandle = (e) => {
+        setModel(e.target.value)
+    }
+
+    const vinChangeHandle = (e) => {
+        setVin(e.target.value)
+    }
+
+    const yearChangeHandle = (e) => {
+        setYear(e.target.value)
+    }
+
+    // Form control
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        addCar()
+    }
+
+    const addCar = () => {
+        const newID = Math.max(...cars.map(el => el.id)) + 1
+        setCars(prev => prev.toSpliced(prev.length, 0, {
+            id: newID,
+            car: company,
+            car_model: model,
+            car_color: color,
+            car_model_year: year,
+            car_vin: vin,
+            price: "$" + price,
+            availability: availability,
+        }))
         handleClose()
     }
 
     return (
         <div>
-            <MenuItem onClick={handleOpen}>Edit</MenuItem>
+            <MenuItem onClick={handleOpen}>Add new car</MenuItem>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -74,47 +104,52 @@ export default function EditModal({ car }) {
                     onSubmit={handleSubmit}
                 >
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Editing
+                        Adding new car
                     </Typography>
                     <TextField
                         id="company"
                         label="Company"
                         variant="outlined"
-                        disabled
-                        value={car.car} />
+                        required
+                        value={company}
+                        onChange={companyChangeHandle} />
                     <TextField
                         id="model"
                         label="Model"
                         variant="outlined"
-                        disabled
-                        value={car.car_model} />
+                        required
+                        value={model}
+                        onChange={modelChangeHandle} />
                     <TextField
                         id="vin"
                         label="VIN"
                         variant="outlined"
-                        disabled
-                        value={car.car_vin} />
+                        required
+                        value={vin}
+                        onChange={vinChangeHandle} />
                     <TextField
                         id="color"
                         required
                         onChange={colorChangeHandle}
                         label="Color"
                         variant="outlined"
-                        defaultValue={color}/>
+                        value={color} />
                     <TextField
                         id="year"
                         label="Year"
                         variant="outlined"
-                        disabled
-                        value={car.car_model_year} />
+                        required
+                        value={year}
+                        onChange={yearChangeHandle}
+                    />
                     <TextField
                         id="price"
                         required
                         onChange={priceChangeHandle}
                         label="Price"
                         variant="outlined"
-                        defaultValue={price} />
-                    <Switch checked={availability} onChange={availabilityChangeHandle} name="Availability" />
+                        value={price} />
+                    <Switch checked={availability} value={availability} onChange={availabilityChangeHandle} name="Availability" />
                     <Button className='btn btn-outline-success' type="submit">OK</Button>
                     <Button className='btn btn-outline-danger' onClick={handleClose}>Close</Button>
                 </Box>
@@ -122,3 +157,5 @@ export default function EditModal({ car }) {
         </div>
     );
 }
+
+export default AddModal;

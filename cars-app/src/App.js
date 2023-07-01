@@ -5,6 +5,8 @@ import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import './styles/pagination.css'
+import AddModal from './components/AddModal';
+import TextField from '@mui/material/TextField';
 
 const carsPerPage = 10
 
@@ -17,10 +19,13 @@ function App() {
     const initialValue = JSON.parse(saved);
     return initialValue || [];
   });
+  const [search, setSearch] = useState('');
+  const [carOffset, setCarOffset] = useState(0);
 
   useEffect(() => {
     localStorage.setItem("cars", JSON.stringify(cars));
     if (cars.length === 0) getCars()
+
   }, [cars]);
 
   // Fetching data
@@ -30,26 +35,37 @@ function App() {
     })
   }
 
-  // Pagination
-  const [carOffset, setCarOffset] = useState(0);
+  // Search & filter 
 
+  const filteredCars = cars?.filter(car => {
+    return search.toLowerCase() === '' ? car : 
+    car.car.toLowerCase().includes(search.toLowerCase()) ||
+    car.car_model.toLowerCase().includes(search.toLowerCase()) ||
+    car.car_vin.toLowerCase().includes(search.toLowerCase()) ||
+    car.car_color.toLowerCase().includes(search.toLowerCase()) ||
+    car.car_model_year.toString().includes(search.toString().toLowerCase()) ||
+    car.price.toLowerCase().includes(search.toLowerCase())
+  })
+
+  const searchChangeHandle = (e) => {
+    setSearch(e.target.value)
+  }
+
+  // Pagination // 
   const endOffset = carOffset + carsPerPage;
-  const currentCars = cars.slice(carOffset, endOffset);
-  const pageCount = Math.ceil(cars.length / carsPerPage);
+  const currentCars = filteredCars.slice(carOffset, endOffset);
+  const pageCount = Math.ceil(filteredCars.length / carsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * carsPerPage) % cars.length;
+    const newOffset = (event.selected * carsPerPage) % filteredCars.length;
     setCarOffset(newOffset);
   };
 
-  // test
-  const deleteCar = () => {
-    setCars(prev => prev.slice(1))
-  }
 
   return (
     <div className="App">
       <CarsContext.Provider value={{ cars, setCars }}>
+        <TextField id="outlined-basic" variant="outlined" placeholder='Search...' onChange={searchChangeHandle} />
         <table className="table">
           <TableHead />
           <TableBody cars={currentCars} />
@@ -68,7 +84,7 @@ function App() {
           nextLinkClassName='page-num'
           activeLinkClassName='active'
           breakLinkClassName='break' />
-        <button onClick={deleteCar}>delete car</button>
+        <AddModal />
       </CarsContext.Provider>
     </div>
   );

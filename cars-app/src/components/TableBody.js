@@ -3,6 +3,7 @@ import ActionMenu from './ActionMenu'
 import '../styles/table.css'
 
 export default function TableBody({ cars }) {
+
     return (
         <tbody className='align-items-center'>
             {cars?.map((car) => (
