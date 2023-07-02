@@ -1,14 +1,15 @@
 .pagination {
+  margin-top: 20px;
   list-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   gap: 5px;
 }
 
 .pagination .page-num {
-  padding: 8px 16px;
+  padding: 6px 12px;
   cursor: pointer;
   border-radius: 6px;
   font-weight: 400;

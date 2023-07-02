@@ -1,6 +1,5 @@
 import React from 'react'
 import ActionMenu from './ActionMenu'
-import '../styles/table.css'
 
 export default function TableBody({ cars }) {
 
@@ -14,7 +13,7 @@ export default function TableBody({ cars }) {
                 <td>{car.car_color}</td>
                 <td>{car.car_model_year}</td>
                 <td>{car.price}</td>
-                <td>{car.availability ? 'yes' : 'nou'}</td>
+                <td>{car.availability ? '✅' : '🟥'}</td>
                 <td><ActionMenu id={car.id} car={car}/></td>
             </tr>))}
         </tbody>

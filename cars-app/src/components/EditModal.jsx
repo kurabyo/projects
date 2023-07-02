@@ -8,33 +8,25 @@ import { CarsContext } from '../App';
 import { useContext, useState } from 'react';
 import { Button } from '@mui/base';
 import { Switch } from '@mui/material';
+import '../styles/editModal.css'
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+
 
 export default function EditModal({ car }) {
-
+    // Context data conection..............................................//
     const { cars, setCars } = useContext(CarsContext);
 
+    // States .............................................................//
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState(car.car_color);
     const [price, setPrice] = useState(car.price);
     const [availability, setAvailability] = useState(car.availability);
 
-
+    // Modal open/close functions.........................................///
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    //Editing functions
+    //Editing events handling functions...................................//
     const colorChangeHandle = (e) => {
         setColor(e.target.value)
     }
@@ -52,9 +44,10 @@ export default function EditModal({ car }) {
         editCar()
     }
 
+    // Eding car by id prop..................................................//
     const editCar = () => {
         const carWithIdIndex = cars.findIndex((i) => i.id === car.id);
-        setCars(prev => prev.toSpliced(carWithIdIndex, 1, {...car, car_color: color, price: price, availability: availability}))
+        setCars(prev => prev.toSpliced(carWithIdIndex, 1, { ...car, car_color: color, price: price, availability: availability }))
         handleClose()
     }
 
@@ -68,7 +61,7 @@ export default function EditModal({ car }) {
                 aria-describedby="modal-modal-description"
             >
                 <Box
-                    sx={style}
+                    className='modal-box'
                     component="form"
                     autoComplete="off"
                     onSubmit={handleSubmit}
@@ -100,7 +93,7 @@ export default function EditModal({ car }) {
                         onChange={colorChangeHandle}
                         label="Color"
                         variant="outlined"
-                        defaultValue={color}/>
+                        defaultValue={color} />
                     <TextField
                         id="year"
                         label="Year"
@@ -114,7 +107,10 @@ export default function EditModal({ car }) {
                         label="Price"
                         variant="outlined"
                         defaultValue={price} />
-                    <Switch checked={availability} onChange={availabilityChangeHandle} name="Availability" />
+                    <div>
+                        <label>Availability</label>
+                        <Switch checked={availability} onChange={availabilityChangeHandle} name="Availability" />
+                    </div>
                     <Button className='btn btn-outline-success' type="submit">OK</Button>
                     <Button className='btn btn-outline-danger' onClick={handleClose}>Close</Button>
                 </Box>

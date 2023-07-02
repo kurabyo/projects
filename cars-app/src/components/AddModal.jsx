@@ -2,28 +2,18 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { CarsContext } from '../App';
 import { useContext, useState } from 'react';
 import { Button } from '@mui/base';
 import { Switch } from '@mui/material';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+import '../styles/editModal.css'
 
 const AddModal = () => {
+    // Context data conection..............................................//
     const { cars, setCars } = useContext(CarsContext);
 
+    // States .............................................................//
     const [open, setOpen] = useState(false);
     const [company, setCompany] = useState('');
     const [model, setModel] = useState('');
@@ -33,11 +23,11 @@ const AddModal = () => {
     const [price, setPrice] = useState('');
     const [availability, setAvailability] = useState(false);
 
-
+    // Modal open/close functions.........................................///
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    //Editing functions
+    //Adding events handling functions...................................//
     const colorChangeHandle = (e) => {
         setColor(e.target.value)
     }
@@ -66,13 +56,13 @@ const AddModal = () => {
         setYear(e.target.value)
     }
 
-    // Form control
-
+    // Form control submit...............................................................//
     const handleSubmit = (e) => {
         e.preventDefault();
         addCar()
     }
 
+    // Adding car to the local memory function...........................................//
     const addCar = () => {
         const newID = Math.max(...cars.map(el => el.id)) + 1
         setCars(prev => prev.toSpliced(prev.length, 0, {
@@ -89,8 +79,8 @@ const AddModal = () => {
     }
 
     return (
-        <div>
-            <MenuItem onClick={handleOpen}>Add new car</MenuItem>
+        <div className='d-flex justify-content-center mt-2'>
+            <Button className="btn btn-primary" onClick={handleOpen}>Add new car</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -98,7 +88,7 @@ const AddModal = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box
-                    sx={style}
+                    className='modal-box'
                     component="form"
                     autoComplete="off"
                     onSubmit={handleSubmit}
@@ -111,35 +101,30 @@ const AddModal = () => {
                         label="Company"
                         variant="outlined"
                         required
-                        value={company}
                         onChange={companyChangeHandle} />
                     <TextField
                         id="model"
                         label="Model"
                         variant="outlined"
                         required
-                        value={model}
                         onChange={modelChangeHandle} />
                     <TextField
                         id="vin"
                         label="VIN"
                         variant="outlined"
                         required
-                        value={vin}
                         onChange={vinChangeHandle} />
                     <TextField
                         id="color"
                         required
                         onChange={colorChangeHandle}
                         label="Color"
-                        variant="outlined"
-                        value={color} />
+                        variant="outlined" />
                     <TextField
                         id="year"
                         label="Year"
                         variant="outlined"
                         required
-                        value={year}
                         onChange={yearChangeHandle}
                     />
                     <TextField
@@ -147,9 +132,11 @@ const AddModal = () => {
                         required
                         onChange={priceChangeHandle}
                         label="Price"
-                        variant="outlined"
-                        value={price} />
-                    <Switch checked={availability} value={availability} onChange={availabilityChangeHandle} name="Availability" />
+                        variant="outlined" />
+                    <div>
+                        <label>Availability</label>
+                        <Switch checked={availability} value={availability} onChange={availabilityChangeHandle} name="Availability" />
+                    </div>
                     <Button className='btn btn-outline-success' type="submit">OK</Button>
                     <Button className='btn btn-outline-danger' onClick={handleClose}>Close</Button>
                 </Box>
