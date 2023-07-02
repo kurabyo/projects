@@ -3,7 +3,7 @@
 # After downloading the repository, go to the './car-app' folder and run the 'npm install' command to download all the dependencies
 # Run 'npm start' to start project
 
-
+.......................................................................................................
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
