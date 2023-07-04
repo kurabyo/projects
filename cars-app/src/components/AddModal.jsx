@@ -74,7 +74,7 @@ const AddModal = () => {
             car_model: model,
             car_color: color,
             car_model_year: year,
-            car_vin: vin,
+            car_vin: vin.toString().toUpperCase(),
             price: "$" + price,
             availability: availability,
         }))
@@ -129,7 +129,7 @@ const AddModal = () => {
                         variant="outlined"
                         required
                         onChange={yearChangeHandle}
-                        inputProps={{ inputMode: 'numeric', pattern: regexYear }}
+                        inputProps={{ inputMode: 'numeric', pattern: regexYear, minLength: 4, maxLength: 4 }}
                     />
                     <TextField
                         id="price"
@@ -137,7 +137,7 @@ const AddModal = () => {
                         onChange={priceChangeHandle}
                         label="Price in dollars (numbers/dot)"
                         variant="outlined" 
-                        inputProps={{ inputMode: 'numeric', pattern: regexPrice }}/>
+                        inputProps={{ inputMode: 'numeric', pattern: regexPrice, }}/>
                     <div>
                         <label>Availability</label>
                         <Switch checked={availability} value={availability} onChange={availabilityChangeHandle} name="Availability" />

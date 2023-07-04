@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -37,11 +36,11 @@ export default function DeleteModal({ id }) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Are you sure you want to delete the item?"}
+                    {"Are you sure you want to delete this item?"}
                 </DialogTitle>
-                <DialogActions>
-                    <Button type="button" class="btn btn-secondary" onClick={handleClose}>No</Button>
-                    <Button type="button" class="btn btn-danger" onClick={removeCarWithId} autoFocus>Yes, I want to delete</Button>
+                <DialogActions className='d-flex justify-content-center'>
+                    <button type="button" className="btn btn-secondary" onClick={handleClose}>No</button>
+                    <button type="button" className="btn btn-danger" onClick={removeCarWithId} autoFocus>Yes, I want to delete</button>
                 </DialogActions>
             </Dialog>
         </div>
