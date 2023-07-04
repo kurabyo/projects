@@ -9,6 +9,9 @@ import { Button } from '@mui/base';
 import { Switch } from '@mui/material';
 import '../styles/editModal.css'
 
+const regexYear = '^(188[6-9]|18[9-9]\\d|19\\d{2}|20[0-9]{2})$';
+const regexPrice = '[0-9.]*';
+
 const AddModal = () => {
     // Context data conection..............................................//
     const { cars, setCars } = useContext(CarsContext);
@@ -122,17 +125,19 @@ const AddModal = () => {
                         variant="outlined" />
                     <TextField
                         id="year"
-                        label="Year"
+                        label="Year (1886 - 2099)"
                         variant="outlined"
                         required
                         onChange={yearChangeHandle}
+                        inputProps={{ inputMode: 'numeric', pattern: regexYear }}
                     />
                     <TextField
                         id="price"
                         required
                         onChange={priceChangeHandle}
-                        label="Price"
-                        variant="outlined" />
+                        label="Price in dollars (numbers/dot)"
+                        variant="outlined" 
+                        inputProps={{ inputMode: 'numeric', pattern: regexPrice }}/>
                     <div>
                         <label>Availability</label>
                         <Switch checked={availability} value={availability} onChange={availabilityChangeHandle} name="Availability" />

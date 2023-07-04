@@ -66,7 +66,7 @@ function App() {
   return (
     <div className="container">
       <CarsContext.Provider value={{ cars, setCars }}>
-        <TextField type='text' className='col mt-3 mb-3' id="outlined-basic" variant="outlined" placeholder='Search...' onChange={searchChangeHandle} />
+        <TextField type='search' className='col mt-3 mb-3' id="outlined-basic" variant="outlined" placeholder='Search...' onChange={searchChangeHandle} />
         <div className='table-responsive'>
           <table className="table text-center mb-0 pb-0">
             <TableHead />

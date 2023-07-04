@@ -10,7 +10,7 @@ import { Button } from '@mui/base';
 import { Switch } from '@mui/material';
 import '../styles/editModal.css'
 
-
+const regexPrice = '[0-9]*\.?[0-9]*'; // eslint-disable-line
 
 export default function EditModal({ car }) {
     // Context data conection..............................................//
@@ -19,7 +19,7 @@ export default function EditModal({ car }) {
     // States .............................................................//
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState(car.car_color);
-    const [price, setPrice] = useState(car.price);
+    const [price, setPrice] = useState(car.price.substring(1));
     const [availability, setAvailability] = useState(car.availability);
 
     // Modal open/close functions.........................................///
@@ -47,7 +47,7 @@ export default function EditModal({ car }) {
     // Eding car by id prop..................................................//
     const editCar = () => {
         const carWithIdIndex = cars.findIndex((i) => i.id === car.id);
-        setCars(prev => prev.toSpliced(carWithIdIndex, 1, { ...car, car_color: color, price: price, availability: availability }))
+        setCars(prev => prev.toSpliced(carWithIdIndex, 1, { ...car, car_color: color, price: '$' + price, availability: availability }))
         handleClose()
     }
 
@@ -104,9 +104,10 @@ export default function EditModal({ car }) {
                         id="price"
                         required
                         onChange={priceChangeHandle}
-                        label="Price"
+                        label="Price in dollars"
                         variant="outlined"
-                        defaultValue={price} />
+                        defaultValue={price} 
+                        inputProps={{ inputMode: 'numeric', pattern: regexPrice }}/>
                     <div>
                         <label>Availability</label>
                         <Switch checked={availability} onChange={availabilityChangeHandle} name="Availability" />
